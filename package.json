@@ -1,0 +1,29 @@
+{
+  "name": "daytradr",
+  "version": "1.0.0",
+  "description": "stock trading game app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dotexe0/daytradr.git"
+  },
+  "keywords": [
+    "trading",
+    "stock",
+    "game"
+  ],
+  "author": "Daniel Varela",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dotexe0/daytradr/issues"
+  },
+  "homepage": "https://github.com/dotexe0/daytradr#readme",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "express": "^4.14.0",
+    "socket.io": "^1.7.2"
+  }
+}
