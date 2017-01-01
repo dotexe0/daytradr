@@ -2,9 +2,40 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="./css/master.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <!-- JS -->
+    <script src="//code.jquery.com/jquery-2.1.0.js"></script>
+    <script src="main.js"></script>
+    <!-- <script src="/socket.io/socket.io.js"></script> -->
+
     <title>daytradr</title>
   </head>
   <body>
-
+    <header class="header-container">
+    <nav class="site-nav">
+      <a href="#"><img src="../assets/logo-name.png" alt="logo" class="logo"></a>
+      <button type="button" name="signup" class="btn-signup">Sign up</button>
+      <button type="button" name="login" class="btn-login">Login</button>
+    </nav>
+    </header>
+    <!--Signup and Login form -->
+    <main class="signup-login-container hidden">
+      <form class="signup-login-form" action="index.html" method="post">
+        <h1 class="signup-login-text">Sign up</h1>
+        <fieldset>
+          <label for="email">Email</label>
+          <input type="email" name="email" id="email" placeholder="example@gmail.com">
+          <label for="password">Password</label>
+          <input type="password" name="password" id="password" placeholder="Password">
+        </fieldset>
+      </form>
+      <button class="btn submit"type="submit" name="submit">Sign up</button>
+      <span class="existing-account-text">Already have an account? <a href="#" class="existing-account-text">Log in</a></span>
+    </main>
+    <!--End of forms -->
+    <div class="login">
+      <h1>hello world</h1>
+    </div>
   </body>
 </html>
