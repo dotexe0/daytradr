@@ -22,10 +22,13 @@
   },
   "homepage": "https://github.com/dotexe0/daytradr#readme",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "bootstrap": "^3.3.7",
     "express": "^4.14.0",
     "jquery": "^3.1.1",
     "mocha": "^3.2.0",
+    "mongodb": "^2.2.16",
+    "mongoose": "^4.7.5",
     "socket.io": "^1.7.2"
   },
   "devDependencies": {
