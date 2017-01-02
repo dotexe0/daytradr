@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/dotexe0/daytradr#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.0",
     "body-parser": "^1.15.2",
     "bootstrap": "^3.3.7",
     "express": "^4.14.0",
@@ -29,6 +30,8 @@
     "mocha": "^3.2.0",
     "mongodb": "^2.2.16",
     "mongoose": "^4.7.5",
+    "passport": "^0.3.2",
+    "passport-http": "^0.3.0",
     "socket.io": "^1.7.2"
   },
   "devDependencies": {
