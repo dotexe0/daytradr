@@ -34,7 +34,6 @@ if (require.main === module) {
 };
 
 // PASSPORT AUTH
-
 //////
 var passport = require('passport');
 var BasicStrategy = require('passport-http').BasicStrategy;
