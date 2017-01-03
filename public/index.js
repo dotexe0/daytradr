@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  //change style from login to signup form
   $('.btn-signup').click(function() {
     $('.signup-login-text').replaceWith('<h1 class="signup-login-text">Signup</h1>');
     $('.btn.submit').text('Sign up');
@@ -6,6 +7,7 @@ $(document).ready(function () {
     $('.existing-account-text').show();
   });
 
+  //change style from signup to login form
   $('.btn-login').click(function() {
     $('.signup-login-text').replaceWith('<h1 class="signup-login-text">Login</h1>');
     $('.btn.submit').text('Login');
@@ -20,14 +22,21 @@ $(document).ready(function () {
     $('.existing-account-text').hide();
   });
 
-  $('.btn.submit').submit(function() {
-    var username = $('#email').val();
-    var password = $('#password').val();
-    var ajax = $.ajax('/dashboard', {
-        type: 'GET',
-        data: JSON.stringify(username, password),
+  $('.signup-login-form').submit(function() {
+    console.log("DID THIS WORK");
+    var usernameVal = $('#email').val();
+    var passwordVal = $('#password').val();
+    var user = {
+      username: usernameVal,
+      password: passwordVal
+    };
+    var ajax = $.ajax('/users', {
+        type: 'POST',
+        data: JSON.stringify(user),
         dataType: 'json',
         contentType: 'application/json'
     });
+    console.log("LOG ME IN PLEASE");
+    ajax.done();
   });
 });
