@@ -53,7 +53,7 @@ img.logo {
   background: #007fba;
 }
 
-.signup-login-container {
+.signup-container, .login-container {
   margin: 0 auto;
   /*margin-top: 10em;*/
   /*position: relative;*/
@@ -71,7 +71,7 @@ fieldset {
   padding-left: 3em;
 }
 
-input#email, input#password {
+input#username, input#password {
   width: 14em;
   height: 2em;
   margin-bottom: 1em;
@@ -103,7 +103,7 @@ a.existing-account-text, a.existing-account-text:hover:after {
   color: #00AEFF;
 }
 
-button.btn.submit {
+button.btn.signup, button.btn.login {
   margin: 0 auto;
   display: block;
   height: 3em;
@@ -115,7 +115,7 @@ button.btn.submit {
   outline: 0;
 }
 
-button.btn.submit:hover {
+button.btn.signup:hover, button.btn.login:hover  {
   background: #007fba
 ;
 }

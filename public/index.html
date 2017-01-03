@@ -19,20 +19,36 @@
       <button type="button" name="login" class="btn-login">Login</button>
     </nav>
     </header>
-    <!--Signup and Login form -->
-    <main class="signup-login-container hidden">
-      <form class="signup-login-form" action="index.html" method="post">
+    <!--Signup form -->      
+    </form>
+    <main class="signup-container hidden">
+      <form class="signup-form">
         <h1 class="signup-login-text">Sign up</h1>
         <fieldset>
-          <label for="email">Email</label>
-          <input type="email" name="email" id="email" placeholder="example@gmail.com">
+          <label for="email">Username</label>
+          <input type="username" name="username" id="username" placeholder="username">
           <label for="password">Password</label>
           <input type="password" name="password" id="password" placeholder="Password">
         </fieldset>
-        <button class="btn submit"type="submit" name="submit">Sign up</button>
+        <button class="btn signup"type="submit" name="submit">Sign up</button>
       </form>
       <span class="existing-account-text">Already have an account? <a href="#" class="existing-account-text">Log in</a></span>
     </main>
+
+    <!-- Login form -->
+    <main class="login-container hidden">
+      <form class="login-form">
+        <h1 class="signup-login-text">Login</h1>
+        <fieldset>
+          <label for="email">Username</label>
+          <input type="username" name="username" id="username" placeholder="username">
+          <label for="password">Password</label>
+          <input type="password" name="password" id="password" placeholder="Password">
+        </fieldset>
+        <button class="btn login"type="submit" name="submit">Login</button>
+      </form>
+    </main>
+
     <!--End of forms -->
     <div class="about">
       <h1>hello world!</h1>
