@@ -1,8 +1,8 @@
 "use strict";
 var express = require('express');
+var path = require('path');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-
 var config = require('./config');
 
 var app = express();
@@ -71,7 +71,6 @@ var strategy = new BasicStrategy(function(username, password, callback) {
 passport.use(strategy);
 
 /////////////////
-
 var User = require('./models/user-model');
 var bcrypt = require('bcryptjs');
 
@@ -162,13 +161,24 @@ app.post('/users', jsonParser, function(req, res) {
   });
 
 
-mongoose.connect('mongodb://localhost/auth').then(function() {
-    // app.listen(process.env.PORT || 8080);
-});
+// mongoose.connect('mongodb://localhost/auth').then(function() {
+//     // app.listen(process.env.PORT || 8080);
+// });
 
 app.get('/', function(req, res) {
-  res.send('Hello world');
-})
+  res.sendFile(path.join(__dirname + '/public/index.html'));
+});
+
+// app.get('/dashboard', function(req, res) {
+//   res.sendFile(path.join(__dirname + '/public/dashboard.html'))
+// });
+//
+
+// prevent unathorized users from accessing the dashboard
+app.use(passport.initialize());
+app.get('/dashboard', passport.authenticate('basic', {session: false}), function(req, res) {
+  res.sendFile(path.join(__dirname + '/public/dashboard.html'))
+});
 
 exports.app = app;
 exports.runServer = runServer;
