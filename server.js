@@ -161,9 +161,9 @@ app.post('/users', jsonParser, function(req, res) {
   });
 
 
-// mongoose.connect('mongodb://localhost/auth').then(function() {
+mongoose.connect('mongodb://localhost/auth').then(function() {
 //     // app.listen(process.env.PORT || 8080);
-// });
+});
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname + '/public/index.html'));
@@ -172,12 +172,11 @@ app.get('/', function(req, res) {
 // app.get('/dashboard', function(req, res) {
 //   res.sendFile(path.join(__dirname + '/public/dashboard.html'))
 // });
-//
 
 // prevent unathorized users from accessing the dashboard
 app.use(passport.initialize());
 app.get('/dashboard', passport.authenticate('basic', {session: false}), function(req, res) {
-  res.sendFile(path.join(__dirname + '/public/dashboard.html'))
+  res.sendFile(path.join(__dirname + '/public/dashboard.html'));
 });
 
 exports.app = app;
