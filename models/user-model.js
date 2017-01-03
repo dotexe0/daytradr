@@ -10,6 +10,10 @@ var UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    portfolio: {
+      type: Array,
+      required: false
     }
 });
 
