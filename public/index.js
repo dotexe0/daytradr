@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function (e) {
   //change style from login to signup form
   $('.btn-signup').click(function() {
     $('.signup-container').removeClass('hidden');
@@ -27,6 +27,25 @@ $(document).ready(function () {
     };
     var ajax = $.ajax('/users', {
         type: 'POST',
+        data: JSON.stringify(user),
+        dataType: 'json',
+        contentType: 'application/json'
+    });
+    console.log("LOG ME IN PLEASE");
+    ajax.done();
+  });
+
+  //login using existing account
+  $('.login-form').submit(function() {
+    console.log("DID THIS WORK");
+    var usernameVal = $('#email').val();
+    var passwordVal = $('#password').val();
+    var user = {
+      username: usernameVal,
+      password: passwordVal
+    };
+    var ajax = $.ajax('/dashboard', {
+        type: 'GET',
         data: JSON.stringify(user),
         dataType: 'json',
         contentType: 'application/json'
