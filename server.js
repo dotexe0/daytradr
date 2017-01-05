@@ -76,6 +76,7 @@ var bcrypt = require('bcryptjs');
 
 var jsonParser = bodyParser.json();
 
+// End point to sign up new user
 app.post('/users', jsonParser, function(req, res) {
     if (!req.body) {
         return res.status(400).json({
@@ -131,14 +132,14 @@ app.post('/users', jsonParser, function(req, res) {
     bcrypt.genSalt(10, function(err, salt) {
         if (err) {
             return res.status(500).json({
-                message: 'Internal server error'
+                message: 'Internal server error @ bcrypt genSalt'
             });
         }
 
         bcrypt.hash(password, salt, function(err, hash) {
             if (err) {
                 return res.status(500).json({
-                    message: 'Internal server error'
+                    message: 'Internal server error  @ bcrypt hash'
                 });
             }
 
@@ -146,36 +147,36 @@ app.post('/users', jsonParser, function(req, res) {
                 username: username,
                 password: hash
             });
-
             user.save(function(err) {
                 if (err) {
+                  console.log(err);
                     return res.status(500).json({
-                        message: 'Internal server error'
+                        message: 'Internal server error user.save'
                     });
                 }
 
-                return res.status(201).json({});
+                return res.status(201).json(user);
             });
         });
     });
   });
 
-mongoose.connect('mongodb://localhost/auth').then(function() {
-//     // app.listen(process.env.PORT || 8080);
-});
+mongoose.connect('mongodb://localhost/auth');
 
+//Endpoint to get root index file.
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname + '/public/index.html'));
 });
-
-// app.get('/dashboard', function(req, res) {
-//   res.sendFile(path.join(__dirname + '/public/dashboard.html'))
-// });
 
 // prevent unathorized users from accessing the dashboard
 app.use(passport.initialize());
 app.get('/dashboard', passport.authenticate('basic', {session: false}), function(req, res) {
   res.sendFile(path.join(__dirname + '/public/dashboard.html'));
+});
+
+// Endpoint to login existing users
+app.post('/login', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
+  return res.status(201).json({});
 });
 
 exports.app = app;
