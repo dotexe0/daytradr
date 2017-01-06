@@ -154,15 +154,35 @@ app.post('/users', jsonParser, function(req, res) {
                         message: 'Internal server error user.save'
                     });
                 }
-
                 return res.status(201).json(user);
             });
         });
     });
   });
 
-mongoose.connect('mongodb://localhost/auth');
+// mongoose.connect('mongodb://localhost/auth');
 
+mongoose.connect('mongodb://localhost/auth').then(function() {
+  User.find(function(err, users) {
+    for(let i = 0; i < users.length; i++) {
+      //users[i].remove();
+      users[i].portfolio += 'GOOG';
+      //users[i].save();
+    };
+  });
+ });
+
+app.get('/users', function(req, res) {
+  mongoose.connect('mongodb://localhost/auth').then(function() {
+    User.find(function(err, users) {
+      for(let i = 0; i < users.length; i++) {
+        //users[i].remove();
+        users[i].portfolio += 'GOOG';
+        //users[i].save();
+      };
+    });
+   });
+})
 //Endpoint to get root index file.
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname + '/public/index.html'));

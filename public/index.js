@@ -19,7 +19,6 @@ $(document).ready(function (e) {
   //sign up a new user
   $('.signup-form').submit(function(e) {
     e.preventDefault();
-    console.log("DID user WORK");
     var usernameVal = $('#username').val();
     var passwordVal = $('#password').val();
     var user = {
@@ -34,10 +33,14 @@ $(document).ready(function (e) {
         data: JSON.stringify(user),
         dataType: 'json',
         contentType: 'application/json'
-    }).done(function() {
-      console.log("Sign me up and log ME IN PLEASE");
+    }).done(function(data) {
+      console.log("Sign me up.");
+      console.log(data);
       window.location.href="/dashboard";
-    });
+    }).fail(function(xhr, status, error) {
+      $('.signup-login-text').append('<h6 class="error-handling"> Username already taken</h6>')
+      $('.error-handling').fadeOut('3000', function() {});
+    })
   });
 
   //login using existing account
@@ -55,8 +58,8 @@ $(document).ready(function (e) {
         data: JSON.stringify(user),
         dataType: 'json',
         contentType: 'application/json'
-    }).done(function() {
-      console.log("LOG ME IN PLEASE");
+    }).done(function(data) {
+      console.log("Log me in.");
       window.location.href="/dashboard";
     });
   });

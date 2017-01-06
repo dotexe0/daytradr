@@ -123,3 +123,7 @@ button.btn.signup:hover, button.btn.login:hover  {
 .about {
   text-align: center;
 }
+
+.error-handling {
+  color: red;
+}
