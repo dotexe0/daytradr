@@ -39,7 +39,7 @@ $(document).ready(function (e) {
       window.location.href="/dashboard";
     }).fail(function(xhr, status, error) {
       $('.signup-login-text').append('<h6 class="error-handling"> Username already taken</h6>')
-      $('.error-handling').fadeOut('3000', function() {});
+      $('.error-handling').hide('5000', function() {});
     })
   });
 
