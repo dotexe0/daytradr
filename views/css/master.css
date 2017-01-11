@@ -1,0 +1,20 @@
+html {
+  padding-top: 80px;
+  background: #00AEFF;
+}
+.search-query {
+  margin-bottom: 30px;
+}
+
+input[type=number] {
+  width: 50px;
+}
+
+.error {
+  color: red;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}

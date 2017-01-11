@@ -1,203 +1,41 @@
-"use strict";
+//load all modules
 var express = require('express');
-var path = require('path');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-var config = require('./config');
-
 var app = express();
-
-app.use(bodyParser.json());
-app.use(express.static('public'));
-
-var runServer = function(callback) {
-  mongoose.createConnection(config.DATABASE_URL, function(err) {
-      if (err && callback) {
-          return callback(err);
-      }
-
-      app.listen(config.PORT, function() {
-          console.log('Listening on localhost:' + config.PORT);
-          if (callback) {
-              callback();
-          }
-      });
-  });
-};
-
-if (require.main === module) {
-  runServer(function(err) {
-      if (err) {
-          console.error(err);
-      }
-  });
-};
-
-// PASSPORT AUTH
-//////
+var port = process.env.PORT || 8080;
+var mongoose = require('mongoose');
 var passport = require('passport');
-var BasicStrategy = require('passport-http').BasicStrategy;
+var flash = require('connect-flash');
 
-var strategy = new BasicStrategy(function(username, password, callback) {
-    User.findOne({
-        username: username
-    }, function (err, user) {
-        if (err) {
-            callback(err);
-            return;
-        }
+var morgan = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var session = require('express-session');
 
-        if (!user) {
-            return callback(null, false, {
-                message: 'Incorrect username.'
-            });
-        }
+var configDB = require('./config/database.js')
 
-        user.validatePassword(password, function(err, isValid) {
-            if (err) {
-                return callback(err);
-            }
+//configure database
+mongoose.connect(configDB.url) // connect to database.
 
-            if (!isValid) {
-                return callback(null, false, {
-                    message: 'Incorrect password.'
-                });
-            }
-            return callback(null, user);
-        });
-    });
-});
+require('./config/passport')(passport);
 
-passport.use(strategy);
+//set up express application
+app.use(morgan('dev')); //log every request to console.
+app.use(cookieParser()); // read cookies (needed for authentication).
+app.use(express.static('views')); //allow access to static files (img/css/js)
+app.use(bodyParser()); //get info from html forms.
+  app.use(bodyParser.urlencoded({ extended: true }));
 
-/////////////////
-var User = require('./models/user-model');
-var bcrypt = require('bcryptjs');
+app.set('view engine', 'ejs'); //set up ejs for templating.
 
-var jsonParser = bodyParser.json();
-
-// End point to sign up new user
-app.post('/users', jsonParser, function(req, res) {
-    if (!req.body) {
-        return res.status(400).json({
-            message: "No request body"
-        });
-    }
-
-    if (!('username' in req.body)) {
-        return res.status(422).json({
-            message: 'Missing field: username'
-        });
-    }
-
-    var username = req.body.username;
-
-    if (typeof username !== 'string') {
-        return res.status(422).json({
-            message: 'Incorrect field type: username'
-        });
-    }
-
-    username = username.trim();
-
-    if (username === '') {
-        return res.status(422).json({
-            message: 'Incorrect field length: username'
-        });
-    }
-
-    if (!('password' in req.body)) {
-        return res.status(422).json({
-            message: 'Missing field: password'
-        });
-    }
-
-    var password = req.body.password;
-
-    if (typeof password !== 'string') {
-        return res.status(422).json({
-            message: 'Incorrect field type: password'
-        });
-    }
-
-    password = password.trim();
-
-    if (password === '') {
-        return res.status(422).json({
-            message: 'Incorrect field length: password'
-        });
-    }
-
-    //bcrypt
-    bcrypt.genSalt(10, function(err, salt) {
-        if (err) {
-            return res.status(500).json({
-                message: 'Internal server error @ bcrypt genSalt'
-            });
-        }
-
-        bcrypt.hash(password, salt, function(err, hash) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Internal server error  @ bcrypt hash'
-                });
-            }
-
-            var user = new User({
-                username: username,
-                password: hash
-            });
-            user.save(function(err) {
-                if (err) {
-                  console.log(err);
-                    return res.status(500).json({
-                        message: 'Internal server error user.save'
-                    });
-                }
-                return res.status(201).json(user);
-            });
-        });
-    });
-  });
-
-// mongoose.connect('mongodb://localhost/auth');
-
-mongoose.connect('mongodb://localhost/auth').then(function() {
-  User.find(function(err, users) {
-    for(let i = 0; i < users.length; i++) {
-      //users[i].remove();
-      users[i].portfolio += 'GOOG';
-      //users[i].save();
-    };
-  });
- });
-
-app.get('/users', function(req, res) {
-  mongoose.connect('mongodb://localhost/auth').then(function() {
-    User.find(function(err, users) {
-      for(let i = 0; i < users.length; i++) {
-        //users[i].remove();
-        users[i].portfolio += 'GOOG';
-        //users[i].save();
-      };
-    });
-   });
-})
-//Endpoint to get root index file.
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname + '/public/index.html'));
-});
-
-// prevent unathorized users from accessing the dashboard
+//required for passport
+app.use(session({ secret: 'letmein', saveUninitialized: true, resave: true }));
 app.use(passport.initialize());
-app.get('/dashboard', passport.authenticate('basic', {session: false}), function(req, res) {
-  res.sendFile(path.join(__dirname + '/public/dashboard.html'));
-});
+app.use(passport.session()); //persistent login sessions.
+app.use(flash()); // use connect-flash for flash messages stored in session.
 
-// Endpoint to login existing users
-app.post('/login', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
-  return res.status(201).json({});
-});
+//routes
+require('./app/routes.js')(app, passport); //load routes and pass into app with fully configured passport.
 
-exports.app = app;
-exports.runServer = runServer;
+//launch server
+app.listen(port);
+console.log('Server running on' , port);

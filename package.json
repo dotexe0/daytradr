@@ -1,42 +1,32 @@
 {
   "name": "daytradr",
   "version": "1.0.0",
-  "description": "stock trading game app",
+  "description": "day trading stock app game",
   "main": "server.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dotexe0/daytradr.git"
-  },
-  "keywords": [
-    "trading",
-    "stock",
-    "game"
-  ],
-  "author": "Daniel Varela",
+  "author": "daniel varela",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/dotexe0/daytradr/issues"
-  },
-  "homepage": "https://github.com/dotexe0/daytradr#readme",
   "dependencies": {
-    "bcryptjs": "^2.4.0",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
-    "bootstrap": "^3.3.7",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.5.5",
     "express": "^4.14.0",
+    "express-session": "^1.14.2",
     "jquery": "^3.1.1",
-    "mocha": "^3.2.0",
-    "mongodb": "^2.2.16",
-    "mongoose": "^4.7.5",
+    "method-override": "^2.3.7",
+    "mongoose": "^4.7.6",
+    "morgan": "^1.7.0",
     "passport": "^0.3.2",
-    "passport-http": "^0.3.0",
-    "path": "^0.12.7",
-    "socket.io": "^1.7.2"
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "chai-http": "^3.0.0"
+    "chai-http": "^3.0.0",
+    "mocha": "^3.2.0"
   }
 }

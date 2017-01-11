@@ -1,0 +1,78 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>daytradr Profile</title>
+  <link rel="shortcut icon" sizes="16x16 24x24 32x32 48x48 64x64" href="./assets/favicon.ico">
+
+  <link rel="stylesheet" href="./css/master.css">
+  <script src="//code.jquery.com/jquery-2.1.0.js"></script>
+  <!-- load bootstrap -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- load fontawesome -->
+  <script src="https://use.fontawesome.com/fa1817fa3f.js"></script>
+  <script type="text/javascript" src="profile.js"></script>
+
+<body>
+  <div class="container">
+    <div class="page-header text-center">
+      <a href="/"><img src="../assets/logo-name.png" alt="logo" class="logo"></a>
+        <h1><span class="fa fa-line-chart"></span> Profile Dashboard</h1>
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    </div>
+
+    <!-- SEARCH BAR -->
+    <div class="row search-query">
+      <div class="col-sm-6 col-sm-offset-3">
+        <div class="input-group">
+          <input type="text" class="form-control" id="search-value" placeholder="EX. NFLX">
+          <span class="input-group-btn">
+            <button class="btn btn-default" id="search" type="button"><span class="glyphicon glyphicon-search"></span></button>
+          </div>
+        </div><!-- /input-group -->
+      </div><!-- /.col-lg-6 -->
+
+      <!-- LOCAL INFORMATION -->
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+        <div class="well 1">
+          <h3 class="text-center"><span class="fa fa-user"></span> User</h3>
+            <p>
+              <strong>id</strong>: <%= user._id %><br>
+              <strong>Username</strong>: <%= user.local.email %><br>
+              <!-- <strong>password</strong>: <%= user.local.password %><br> -->
+              <strong>Portfolio Funds</strong class="portfolio-funds">: $<%= user.local.portfolio.funds %>
+            </p>
+        </div>
+      </div>
+    </div>
+
+<!-- STOCK DATA -->
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <div class="well 2">
+        <main class="portfolio-data"></main>
+          <h3 class="text-center"><span class="portfolio fa fa-line-chart"></span> Stock Info</h3>
+          <div class="stocks">
+            <div class="buy-sell buttons text-center">
+              <h5 class="stock-data text-center"></h5>
+              <label for="shares">Shares
+                <input id="shares" class="text-center"type="number" name="" value="" min="0" >
+              </label><br>
+              <button class="btn btn-md buy-btn" type="button" name="Buy" disabled>Buy</button>
+              <button class="btn btn-md sell-btn" type="button" name="Sell" disabled>Sell</button>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+  <!-- create user variable and pass it to js file -->
+  <script type="text/javascript">
+    window.user= <%- JSON.stringify(user) %>
+  </script>
+</body>
+</html>
