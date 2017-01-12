@@ -1,9 +1,5 @@
 $(document).ready( () => {
-  // let user = window.user.local.portfolio;
-  // console.log("user ", user);
-  // console.log("portfolio ", user);
-  // console.log("funds ", user.funds);
-  // console.log("stocks ", user.stocks);
+
   let stockBidPrice, stockAskPrice, stockSymbol;
   console.log(window.user);
   $('#search').on('click', (e) => {
@@ -26,7 +22,6 @@ $(document).ready( () => {
        sellStock(window.user.local.portfolio.funds, stockSymbol, stockAskPrice, units);
        console.log('Sell button pressed.');
      });
-
   });
 
   // ==================================
@@ -46,7 +41,6 @@ $(document).ready( () => {
     // =================================
     //  BUY STOCKS
     // =================================
-
   let buyStock = (funds, stockSymbol, bidPrice, units) => {
     // console.log("funds", funds);
     // console.log("stockSymbol", stockSymbol);
@@ -74,12 +68,12 @@ $(document).ready( () => {
   // =================================
   //  SELL STOCKS
   // =================================
-
   let sellStock = (funds, stockSymbol, askPrice, units) => {
     if (window.user.local.portfolio.stocks[stockSymbol] > 0 && window.user.local.portfolio.stocks[stockSymbol] > parseInt(units)) {
       window.user.local.portfolio.funds += askPrice * units;
       window.user.local.portfolio.stocks[stockSymbol] -= parseInt(units);
       console.log(window.user);
+      updateUser(window.user);
     } else if (!window.user.local.portfolio.stocks[stockSymbol]) { // user doesn't hold stock in portfolio
       $('.well.2').prepend('<span><h4 class="error text-centered"> YOU DONT OWN THIS STOCK!</h4></span>');
       $('.error').hide(6000);
@@ -98,7 +92,7 @@ $(document).ready( () => {
     $.ajax({
       url: '/user',
       type: 'PUT',
-      data: JSON.stringify(user),
+      data: user,
       dataType: 'json',
       contentType: 'application/json',
       success: function(data) {
