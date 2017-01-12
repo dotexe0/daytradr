@@ -96,7 +96,7 @@ $(document).ready( () => {
   // =================================
   let updateUser = (user) => {
     $.ajax({
-      url: 'https://daytradr.heroku.com/user',
+      url: '/user',
       type: 'PUT',
       data: JSON.stringify(user),
       dataType: 'json',

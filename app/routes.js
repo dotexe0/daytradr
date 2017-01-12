@@ -48,9 +48,8 @@ var User = require('./models/user');
   });
 
 // ======================================
-// USERS
+// USER UPDATE
 // ======================================
-  //FIND USER AND UPDATE USING PUT
   app.put('/user', isLoggedIn, function(req, res) {
     User.findById(req.body._id, function(err, user) {
       if (err) {
