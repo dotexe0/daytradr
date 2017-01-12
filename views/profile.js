@@ -92,7 +92,7 @@ $(document).ready( () => {
     $.ajax({
       url: '/user',
       type: 'PUT',
-      data: user,
+      data: JSON.stringify(user),
       dataType: 'json',
       contentType: 'application/json',
       success: function(data) {
