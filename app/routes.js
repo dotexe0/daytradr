@@ -1,5 +1,5 @@
 module.exports = function(app, passport) {
-
+var User = require('./models/user');
   // ======================================
   // HOME PAGE with login links (api endpoint)
   // ======================================
@@ -47,10 +47,25 @@ module.exports = function(app, passport) {
     res.render('profile.ejs', user);
   });
 
-  // ======================================
-  // USERS
-  // ======================================
-    //FIND USER AND UPDATE USING PUT
+// ======================================
+// USERS
+// ======================================
+  //FIND USER AND UPDATE USING PUT
+  app.put('/user', isLoggedIn, function(req, res) {
+    User.findById(req.body._id, function(err, user) {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        user.save(function(err, user) {
+          if (err) {
+            res.status(500).send(err);
+          } else {
+            res.status(200).send(user);
+          }
+        });
+      }
+    });
+  });
 
   // ======================================
   // LOGOUT
@@ -68,5 +83,5 @@ module.exports = function(app, passport) {
       res.redirect('/');
     }
   };
-  
+
 };
