@@ -33,21 +33,6 @@
         </div><!-- /input-group -->
       </div><!-- /.col-lg-6 -->
 
-      <!-- LOCAL INFORMATION -->
-    <div class="row">
-      <div class="col-sm-6 col-sm-offset-3">
-        <div class="well 1">
-          <h3 class="text-center"><span class="fa fa-user"></span> User</h3>
-            <p>
-              <strong>id</strong>: <%= user._id %><br>
-              <strong>Username</strong>: <%= user.local.email %><br>
-              <!-- <strong>password</strong>: <%= user.local.password %><br> -->
-              <strong>Portfolio Funds</strong class="portfolio-funds">: $<%= user.local.portfolio.funds %>
-            </p>
-        </div>
-      </div>
-    </div>
-
 <!-- STOCK DATA -->
   <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
@@ -67,6 +52,21 @@
       </div>
     </div>
   </div>
+
+  <!-- LOCAL INFORMATION -->
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-3">
+    <div class="well 1">
+      <h3 class="text-center"><span class="fa fa-user"></span> User</h3>
+        <p>
+          <strong>id</strong>: <%= user._id %><br>
+          <strong>Username</strong>: <%= user.local.email %><br>
+          <!-- <strong>password</strong>: <%= user.local.password %><br> -->
+          <strong>Portfolio Funds</strong class="portfolio-funds">: $<%= user.local.portfolio.funds %>
+        </p>
+    </div>
+  </div>
+</div>
 
 </div>
 
