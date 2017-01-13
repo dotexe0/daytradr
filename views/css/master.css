@@ -1,9 +1,14 @@
 html {
   padding-top: 80px;
-  background: #00AEFF;
+  background: #008542;
+}
+
+.container {
+  /*background: #008542;*/
+
 }
 .search-query {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 input[type=number] {
@@ -17,4 +22,8 @@ input[type=number] {
 
 .hidden {
   display: none;
+}
+
+.well {
+  background: #008542;
 }

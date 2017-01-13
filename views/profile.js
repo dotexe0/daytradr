@@ -27,7 +27,7 @@ $(document).ready( () => {
   // ==================================
   // GRAB EXTERNAL API DATA
   // ==================================
-  function getCurrentStockAPIData(query) {
+  let getCurrentStockAPIData = (query) => {
       const robinhoodURL = 'https://api.robinhood.com/quotes/?symbols='
       let stockQuote = $.getJSON(robinhoodURL + query , (data) => {
         console.log(data.results[0]);
@@ -38,17 +38,10 @@ $(document).ready( () => {
       });
     };
 
-    // =================================
-    //  BUY STOCKS
-    // =================================
+  // =================================
+  //  BUY STOCKS
+  // =================================
   let buyStock = (funds, stockSymbol, bidPrice, units) => {
-    // console.log("funds", funds);
-    // console.log("stockSymbol", stockSymbol);
-    // console.log("bidPrice", bidPrice);
-    // console.log("units", units); //string
-    // console.log('stocks', user.stocks);
-    // console.log(user);
-
     if (bidPrice * units > funds) {
       $('.well.2').prepend('<span><h4 class="error text-centered"> NOT ENOUGH FUNDS!</h4></span>');
       $('.error').hide(6000);
@@ -79,7 +72,7 @@ $(document).ready( () => {
       $('.error').hide(6000);
       console.log(window.user);
     } else if (window.user.local.portfolio.stocks[stockSymbol] < parseInt(units)) {
-      $('.well.2').prepend('<span><h4 class="error text-centered"> YOU DONT HAVE ENOUGH STOCK UNITS</h4></span>');
+      $('.well.2').prepend('<span><h4 class="error text-centered"> YOU DONT HAVE ENOUGH SHARES</h4></span>');
       $('.error').hide(6000);
       console.log(window.user);
     }
@@ -96,7 +89,10 @@ $(document).ready( () => {
       dataType: 'json',
       contentType: 'application/json',
       success: function(data) {
-        console.log('user updated')},
+        console.log('user updated: ', data);
+        $('.portfolio-funds').html("<h5>DID THIS UPDATE?</h5>");
+        $('.portfolio-stocks').text(data.local.portfolio.stocks);
+      },
       fail: function(xhr, status, error) {
         alert(error);
       }
