@@ -1,6 +1,15 @@
 $(document).ready( () => {
 
   let stockBidPrice, stockAskPrice, stockSymbol;
+
+  $('.portfolio-funds').replaceWith('<strong class="portfolio-funds">Portfolio Funds: $</strong>' + window.user.local.portfolio.funds + '<br>');
+    for (var key in window.user.local.portfolio.stocks){
+      if (window.user.local.portfolio.stocks.hasOwnProperty(key)) {
+         console.log("Key is " + key + ", value is " + window.user.local.portfolio.stocks[key]);
+         $('.portfolio-stocks').html('<strong class="portfolio-stocks">Portfolio Stocks: </strong>' + key + " : " + window.user.local.portfolio.stocks[key] + '</br>');
+      }
+    }
+
   console.log(window.user);
   $('#search').on('click', (e) => {
      e.preventDefault();
@@ -89,9 +98,16 @@ $(document).ready( () => {
       dataType: 'json',
       contentType: 'application/json',
       success: function(data) {
-        console.log('user updated: ', data);
-        $('.portfolio-funds').html("<h5>DID THIS UPDATE?</h5>");
-        $('.portfolio-stocks').text(data.local.portfolio.stocks);
+        $('.portfolio-funds').html('<strong class="portfolio-funds">Portfolio Funds: $</strong>' + data.local.portfolio.funds + '<br>');
+        $('.portfolio-stocks').replaceWith('<strong class="portfolio-stocks">Portfolio Stocks: </strong>');
+
+        console.log(Object.keys(data.local.portfolio.stocks).length);
+        for (var key in data.local.portfolio.stocks){
+            if (data.local.portfolio.stocks.hasOwnProperty(key)) {
+               console.log("Key is " + key + ", value is " + data.local.portfolio.stocks[key]);
+               $('.portfolio-stocks').append(key + " : " + data.local.portfolio.stocks[key] + '</br>');
+            }
+        }
       },
       fail: function(xhr, status, error) {
         alert(error);
