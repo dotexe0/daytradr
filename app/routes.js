@@ -50,23 +50,15 @@ var User = require('./models/user');
 // ======================================
 // USER UPDATE
 // ======================================
-  // app.put('/user', isLoggedIn, function(req, res) {
-  app.put('/user', function(req, res) {
-    // console.log("requested ", req.body);
-    User.findById(req.body._id, function(err, user) {
-      // console.log("in db ", user);
-      user = req.body;
+  app.put('/user', isLoggedIn, function(req, res) {
+    console.log("requested,  ", req.body);
+    User.findByIdAndUpdate(req.body._id, {$set:req.body}, function(err, user) {
+      console.log("in db ", user.local.portfolio.stocks);
       if (err) {
         res.status(500).send(err);
       } else {
-        user.save(function(err, user) {
-          if (err) {
-            res.status(500).send(err);
-          } else {
-            res.status(200).send(user);
-          }
-        });
-      }
+        res.status(200).send(user);
+        }
     });
   });
 
