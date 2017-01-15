@@ -4,6 +4,7 @@ $(document).ready(() => {
   let stockBidPrice, stockAskPrice, stockSymbol;
   let units = parseInt($('#shares').val());
   let query = $('#search-value').val().toUpperCase();
+  // console.log(window.user);
   updateUser(window.user);
 
   //Search for stock ticker
@@ -89,10 +90,12 @@ $(document).ready(() => {
         updateUser(window.user);
     } else if (!window.user.local.portfolio.stocks[stockSymbol]) { // user doesn't hold stock in portfolio
         $('.well.2').prepend('<span><h4 class="error text-centered"> YOU DONT OWN THIS STOCK!</h4></span>');
+        console.log("don't own this stock, ", window.user);
         setTimeout(function() {
           $('.error').remove();
         }, 2000);
     } else if (window.user.local.portfolio.stocks[stockSymbol] < parseInt(units)) {
+      console.log("Not enough shares, ", window.user);
         $('.well.2').prepend('<span><h4 class="error text-centered"> YOU DONT HAVE ENOUGH SHARES</h4></span>');
         setTimeout(function() {
           $('.error').remove();
@@ -104,6 +107,7 @@ $(document).ready(() => {
   //  UPDATE USER
   // =================================
   function updateUser(user) {
+    console.log("update user called???");
     $.ajax({
       url: '/user',
       type: 'PUT',
@@ -111,16 +115,16 @@ $(document).ready(() => {
       dataType: 'json',
       contentType: 'application/json',
       success: function(data) {
+        // console.log("old data? ", data);
         $('.portfolio-funds').html('<strong class="portfolio-funds">Portfolio Purchasing Power: $</strong>' + parseInt(data.local.portfolio.funds).toFixed(2) + '<br>');
-        $('.portfolio-stocks').empty();
         $('.portfolio-stocks').replaceWith('<strong class="portfolio-stocks">Portfolio Stocks: </strong>');
 
-        // console.log(Object.keys(data.local.portfolio.stocks).length);
         for (var key in data.local.portfolio.stocks) {
             if (data.local.portfolio.stocks.hasOwnProperty(key)) {
-               $('.portfolio-stocks').append(key + " : " + data.local.portfolio.stocks[key] + '</br>');
+               $('.portfolio-stocks').append(key + " : " + data.local.portfolio.stocks[key] + '<br>');
             }
         }
+        // console.log("did it reach the end?");
       },
       fail: function(xhr, status, error) {
         alert(error);

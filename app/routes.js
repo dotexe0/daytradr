@@ -54,11 +54,12 @@ var User = require('./models/user');
     console.log("requested,  ", req.body);
     User.findByIdAndUpdate(req.body._id, {$set:req.body}, function(err, user) {
       console.log("in db ", user.local.portfolio.stocks);
+      user = req.body;
       if (err) {
         res.status(500).send(err);
       } else {
         res.status(200).send(user);
-        }
+      }
     });
   });
 
