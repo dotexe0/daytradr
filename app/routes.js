@@ -50,7 +50,8 @@ var User = require('./models/user');
 // ======================================
 // USER UPDATE
 // ======================================
-  app.put('/user', isLoggedIn, function(req, res) {
+  // app.put('/user', isLoggedIn, function(req, res) {
+  app.put('/user', function(req, res) {
     // console.log("requested ", req.body);
     User.findById(req.body._id, function(err, user) {
       // console.log("in db ", user);
