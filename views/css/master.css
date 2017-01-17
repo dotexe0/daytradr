@@ -3,7 +3,7 @@ html, body {
 }
 
 body {
-
+  padding-top: 20px;
 }
 
 .container {
@@ -30,6 +30,12 @@ a, a:hover {
   text-align: center;
 }
 
+.success {
+  /**/green
+  color: #008542;
+  text-align: center;
+}
+
 .hidden {
   display: none;
 }
@@ -40,4 +46,8 @@ a, a:hover {
 
 h3.text-center {
   font-family: 'Raleway', sans-serif;
+}
+
+li.list-group-item {
+  color: black;
 }

@@ -72,25 +72,31 @@ $(document).ready(() => {
   let buyStock = (funds, stockSymbol, bidPrice, units) => {
     console.log("buy stocks ", units);
     if (units == NaN || units == null || units == 0 ) {
-        $('.well.2').prepend('<h4 class="error text-centered"> Number of shares cannot be 0!</h4>');
+        $('.well.2').prepend('<h5 class="error text-centered"> Enter a number greater than 0!</h5>');
         setTimeout(function() {
           $('.error').remove();
         }, 2000);
       } else if (bidPrice * units > funds) {
-          $('.well.2').prepend('<h4 class="error text-centered"> Number of shares cannot be 0!</h4>');
+          $('.well.2').prepend('<h5 class="error text-centered"> Insufficient funds!</h5>');
           setTimeout(function() {
             $('.error').remove();
           }, 2000);
       } else if (window.user.local.portfolio.stocks[stockSymbol]) {
           window.user.local.portfolio.funds -= bidPrice * units;
           window.user.local.portfolio.stocks[stockSymbol] += parseInt(units);
-          console.log("bought more stocks, ", window.user);
+          $('.well.2').prepend('<span><h4 class="success text-centered"> Order filled.</h4></span>');
+          setTimeout(function() {
+            $('.success').remove();
+          }, 2000);
           $('#shares').val(0);
           updateUser(window.user);
     } else {
           window.user.local.portfolio.funds -= bidPrice * units;
           window.user.local.portfolio.stocks[stockSymbol] = parseInt(units);
-          console.log("bought new stock, ", window.user);
+          $('.well.2').prepend('<span><h4 class="success text-centered"> Order filled.</h4></span>');
+          setTimeout(function() {
+            $('.success').remove();
+          }, 2000);
           $('#shares').val(0);
           updateUser(window.user);
     }
@@ -102,28 +108,38 @@ $(document).ready(() => {
   let sellStock = (funds, stockSymbol, askPrice, units) => {
 
     if (units == 0) {
-      $('.well.2').prepend('<span><h4 class="error text-centered"> You cannot sell 0 shares!</h4></span>');
+      $('.well.2').prepend('<span><h5 class="error text-centered"> You cannot sell 0 shares!</h5></span>');
       console.log("don't own this stock, ", window.user);
       setTimeout(function() {
         $('.error').remove();
       }, 2000);
-    // } else if (units == 1){
-    //
+    } else if (units == window.user.local.portfolio.stocks[stockSymbol]){
+        window.user.local.portfolio.funds += askPrice * units;
+        delete window.user.local.portfolio.stocks[stockSymbol];
+        updateUser(window.user);
+        console.log("del ", window.user.local);
+        $('.well.2').prepend('<span><h5 class="success text-centered"> Order filled.</h5></span>');
+        setTimeout(function() {
+          $('.success').remove();
+        }, 2000);
+
     } else if (window.user.local.portfolio.stocks[stockSymbol] > 0 && window.user.local.portfolio.stocks[stockSymbol] > parseInt(units)) {
         window.user.local.portfolio.funds += askPrice * units;
         window.user.local.portfolio.stocks[stockSymbol] -= parseInt(units);
-        console.log("stock sold ", window.user);
         $('#shares').val(0);
+        $('.well.2').prepend('<span><h5 class="success text-centered"> Order filled.</h5></span>');
+        setTimeout(function() {
+          $('.success').remove();
+        }, 2000);
         updateUser(window.user);
     } else if (!window.user.local.portfolio.stocks[stockSymbol]) { // user doesn't hold stock in portfolio
-        $('.well.2').prepend('<span><h4 class="error text-centered"> YOU DONT OWN THIS STOCK!</h4></span>');
-        console.log("don't own this stock, ", window.user);
+        $('.well.2').prepend('<span><h5 class="error text-centered"> You cannot sell shares of stock you do not own.</h5></span>');
         setTimeout(function() {
           $('.error').remove();
         }, 2000);
     } else if (window.user.local.portfolio.stocks[stockSymbol] < parseInt(units)) {
       console.log("Not enough shares, ", window.user);
-        $('.well.2').prepend('<span><h4 class="error text-centered"> YOU DONT HAVE ENOUGH SHARES</h4></span>');
+        $('.well.2').prepend('<span><h5 class="error text-centered"> Not enough shares.</h5></span>');
         setTimeout(function() {
           $('.error').remove();
         }, 2000);
@@ -147,7 +163,7 @@ $(document).ready(() => {
 
         for (let key in data.local.portfolio.stocks) {
             if (data.local.portfolio.stocks.hasOwnProperty(key) && key !== "") {
-               $('.portfolio-stocks').append('<li>' + key + " : " + data.local.portfolio.stocks[key] + ' shares</li><br>');
+               $('.portfolio-stocks').append('<li class="list-group-item list-group-item-success">' + key + " : " + data.local.portfolio.stocks[key] + ' shares</li><br>');
             }
         }
         updatePortfolioWorth(data);
@@ -171,18 +187,12 @@ $(document).ready(() => {
         }).done((data) => {
             stockAskPrice = data.results[0].ask_price;
             portfolioWorth += (stockAskPrice * user.local.portfolio.stocks[key]);
-            console.log("ask price, ", stockAskPrice);
             console.log("key " + key + ", stocks " + user.local.portfolio.stocks[key]);
-            console.log("inside ", portfolioWorth);
-
             appreciation = (portfolioWorth + user.local.portfolio.funds - 10000.00).toFixed(2);
             $('.portfolio-worth').html('<strong class="portfolio-worth">Portfolio Value: $</strong>' + parseInt(portfolioWorth + user.local.portfolio.funds).toFixed(2) + ' (' + appreciation + ')' + '<br>');
           });
       }
     }
-    // console.log("outside ", portfolioWorth);
-    // appreciation = (portfolioWorth + user.local.portfolio.funds - 10000.00).toFixed(2);
-    // $('.portfolio-worth').html('<strong class="portfolio-worth">Portfolio Value: $</strong>' + parseInt(portfolioWorth + user.local.portfolio.funds).toFixed(2) + ' (' + appreciation + ')' + '<br>');
   };
 
 });
