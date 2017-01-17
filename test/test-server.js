@@ -30,7 +30,7 @@ chai.use(chaiHttp);
     //         done();
     //       });
     // });
-});
+// });
 
 //
 // var mongoose = require('mongoose');

@@ -57,44 +57,44 @@
         </div><!-- /input-group -->
       </div><!-- /.col-lg-6 -->
 
-<!-- STOCK DATA -->
-  <div class="row">
-    <div class="col-sm-6 col-sm-offset-3">
-      <div class="well 2">
-        <main class="portfolio-data"></main>
-          <h3 class="text-center"><span class="portfolio fa fa-line-chart"></span> Stock Info</h3>
-          <div class="stocks">
-            <div class="buy-sell buttons text-center">
-              <h5 class="stock-data text-center"></h5>
-              <label for="shares">Shares
-                <input id="shares" class="text-center"type="number" name="" value="" min="0" >
-              </label><br>
-              <button class="btn btn-md buy-btn" type="button" name="Buy" disabled>Buy</button>
-              <button class="btn btn-md sell-btn" type="button" name="Sell" disabled>Sell</button>
-            </div>
+    <!-- STOCK DATA -->
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+          <div class="well 2">
+            <main class="portfolio-data"></main>
+              <h3 class="text-center"><span class="portfolio fa fa-line-chart"></span> Stock Info</h3>
+              <div class="stocks">
+                <div class="buy-sell buttons text-center">
+                  <h5 class="stock-data text-center"></h5>
+                  <label for="shares">Shares
+                    <input id="shares" class="text-center"type="number" name="" value="" min="0" >
+                  </label><br>
+                  <button class="btn btn-md buy-btn" type="button" name="Buy" disabled>Buy</button>
+                  <button class="btn btn-md sell-btn" type="button" name="Sell" disabled>Sell</button>
+                </div>
+              </div>
           </div>
+        </div>
+      </div>
+
+      <!-- LOCAL INFORMATION -->
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+        <div class="well 1">
+          <h3 class="text-center"><span class="fa fa-user"></span> User</h3>
+            <p>
+              <strong>id</strong>: <%= user._id %><br>
+              <strong>Username</strong>: <%= user.local.email %><br>
+              <!-- <strong>password</strong>: <%= user.local.password %><br> -->
+              <strong class="portfolio-worth">Portfolio Value: </strong><br>
+              <strong class="portfolio-funds">Portfolio Purchasing Power: $</strong><br>
+              <strong class="portfolio-stocks">Portfolio Stocks: </strong><br>
+            </p>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- LOCAL INFORMATION -->
-<div class="row">
-  <div class="col-sm-6 col-sm-offset-3">
-    <div class="well 1">
-      <h3 class="text-center"><span class="fa fa-user"></span> User</h3>
-        <p>
-          <strong>id</strong>: <%= user._id %><br>
-          <strong>Username</strong>: <%= user.local.email %><br>
-          <!-- <strong>password</strong>: <%= user.local.password %><br> -->
-          <strong class="portfolio-worth">Portfolio Value: </strong><br>
-          <strong class="portfolio-funds">Portfolio Purchasing Power: $</strong><br>
-          <strong class="portfolio-stocks">Portfolio Stocks: </strong><br>
-        </p>
-    </div>
   </div>
-</div>
-
-</div>
 
   <!-- create user variable and pass it to js file -->
   <script type="text/javascript">
