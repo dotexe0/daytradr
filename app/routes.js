@@ -13,9 +13,13 @@ var path = require('path');
   // LEADERBOARD
   // ======================================
   app.get('/leaderboard', function(req, res) {
-    res.render('leaderboard.ejs');
+    User.find({}, function(err, users) {
+      var users = {users};
+      console.log(users);
+      res.render('leaderboard.ejs', users);
+    });
   });
-  
+
   // ======================================
   // LOGIN (api endpoint)
   // ======================================

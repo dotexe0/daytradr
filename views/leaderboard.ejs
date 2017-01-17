@@ -1,4 +1,4 @@
-<!-- views/profile.ejs -->
+<!-- views/leaderboard.ejs -->
 <!doctype html>
 <html>
 <head>
@@ -21,11 +21,11 @@
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"><li><a href="/">Home</a></li></span>
           <span class="icon-bar"><li><a href="/profile">Profile</a></li></span>
-        </button>
+        </button> -->
         <a class="navbar-brand" href="/profile">daytradr</a>
       </div>
 
@@ -33,17 +33,17 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
           <li><a href="/profile">Profile</a></li>
+          <li><a href="/logout">Logout</a></li>
+
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
 
 
-      <div class="page-header text-center">
-        <a href="/"><img src="../assets/logo-name.png" alt="logo" class="logo"></a>
-          <h1><span class="fa fa-line-chart"></span> Leaderboard</h1>
-          <a href="/logout" class="btn btn-default btn-sm">Logout</a>
-      </div>
+    <div class="page-header text-center">
+        <h1><span class="fa fa-line-chart"></span> Leaderboard</h1>
+    </div>
 
     <!-- LOCAL INFORMATION -->
   <div class="row">
@@ -51,7 +51,6 @@
       <div class="well 1">
         <h3 class="text-center"><span class="fa fa-user"></span> User</h3>
           <p>
-
           </p>
       </div>
     </div>
@@ -61,7 +60,8 @@
 
   <!-- create user variable and pass it to js file -->
   <script type="text/javascript">
-
+    var users = <%- JSON.stringify(users) %>
+    console.log("sdcs ", users);
   </script>
 </body>
 </html>
