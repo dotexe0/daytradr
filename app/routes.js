@@ -4,9 +4,15 @@ var User = require('./models/user');
   // HOME PAGE with login links (api endpoint)
   // ======================================
   app.get('/', function(req, res) {
-    res.render('index.html') //load index file.
+    res.status(200).sendFile('index.html') //load index file.
   });
 
+  // ======================================
+  // LEADERBOARD
+  // ======================================
+  app.get('/leaderboard', function(req, res) {
+    res.status(200).sendFile('leaderboard.html', {root :'/views/'}); //load leaderboard file
+  });
   // ======================================
   // LOGIN (api endpoint)
   // ======================================
@@ -51,9 +57,7 @@ var User = require('./models/user');
 // USER UPDATE
 // ======================================
   app.put('/user', isLoggedIn, function(req, res) {
-    console.log("requested,  ", req.body);
     User.findByIdAndUpdate(req.body._id, {$set:req.body}, function(err, user) {
-      console.log("in db ", user.local.portfolio.stocks);
       user = req.body;
       if (err) {
         res.status(500).send(err);

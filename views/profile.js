@@ -1,10 +1,9 @@
 $(document).ready(() => {
 
 //Handle all floating number issues.
-  function toFixed(num, fixed) {
-      var re = new RegExp('^-?\\d+(?:\.\\d{0,' + (fixed || -1) + '})?');
-      return num.toString().match(re)[0];
-  }
+function round(value, decimals) {
+  return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+}
 
   //Create variables
   let stockBidPrice, stockAskPrice, stockSymbol;
@@ -59,8 +58,9 @@ $(document).ready(() => {
   function getCurrentStockAPIData(query) {
       const robinhoodURL = 'https://api.robinhood.com/quotes/?symbols='
       $.getJSON(robinhoodURL + query , (data) => {
-        $('.stock-data').text(query + ': $' + parseInt(data.results[0].bid_price).toFixed(2));
+        $('.stock-data').text(query + ': $' + round(data.results[0].bid_price, 2));
         stockBidPrice = data.results[0].bid_price;
+        console.log(stockBidPrice);
         stockAskPrice = data.results[0].ask_price;
         stockSymbol = data.results[0].symbol;
       });
@@ -82,7 +82,7 @@ $(document).ready(() => {
             $('.error').remove();
           }, 2000);
       } else if (window.user.local.portfolio.stocks[stockSymbol]) {
-          window.user.local.portfolio.funds -= bidPrice * units;
+          window.user.local.portfolio.funds -= round(bidPrice * units, 2);
           window.user.local.portfolio.stocks[stockSymbol] += parseInt(units);
           $('.well.2').prepend('<span><h4 class="success text-centered"> Order filled.</h4></span>');
           setTimeout(function() {
@@ -91,7 +91,7 @@ $(document).ready(() => {
           $('#shares').val(0);
           updateUser(window.user);
     } else {
-          window.user.local.portfolio.funds -= bidPrice * units;
+          window.user.local.portfolio.funds -= round(bidPrice * units, 2);
           window.user.local.portfolio.stocks[stockSymbol] = parseInt(units);
           $('.well.2').prepend('<span><h4 class="success text-centered"> Order filled.</h4></span>');
           setTimeout(function() {
@@ -113,8 +113,9 @@ $(document).ready(() => {
       setTimeout(function() {
         $('.error').remove();
       }, 2000);
+
     } else if (units == window.user.local.portfolio.stocks[stockSymbol]){
-        window.user.local.portfolio.funds += askPrice * units;
+        window.user.local.portfolio.funds += round(askPrice * units, 2);
         delete window.user.local.portfolio.stocks[stockSymbol];
         updateUser(window.user);
         console.log("del ", window.user.local);
@@ -124,7 +125,7 @@ $(document).ready(() => {
         }, 2000);
 
     } else if (window.user.local.portfolio.stocks[stockSymbol] > 0 && window.user.local.portfolio.stocks[stockSymbol] > parseInt(units)) {
-        window.user.local.portfolio.funds += askPrice * units;
+        window.user.local.portfolio.funds += round(askPrice * units, 2);
         window.user.local.portfolio.stocks[stockSymbol] -= parseInt(units);
         $('#shares').val(0);
         $('.well.2').prepend('<span><h5 class="success text-centered"> Order filled.</h5></span>');
@@ -132,11 +133,14 @@ $(document).ready(() => {
           $('.success').remove();
         }, 2000);
         updateUser(window.user);
-    } else if (!window.user.local.portfolio.stocks[stockSymbol]) { // user doesn't hold stock in portfolio
+
+    // user doesn't hold stock in portfolio
+    } else if (!window.user.local.portfolio.stocks[stockSymbol]) {
         $('.well.2').prepend('<span><h5 class="error text-centered"> You cannot sell shares of stock you do not own.</h5></span>');
         setTimeout(function() {
           $('.error').remove();
         }, 2000);
+        // user doesn't have enough shares
     } else if (window.user.local.portfolio.stocks[stockSymbol] < parseInt(units)) {
       console.log("Not enough shares, ", window.user);
         $('.well.2').prepend('<span><h5 class="error text-centered"> Not enough shares.</h5></span>');
@@ -157,8 +161,7 @@ $(document).ready(() => {
       dataType: 'json',
       contentType: 'application/json',
       success: (data) => {
-        // console.log("old data? ", data);
-        $('.portfolio-funds').html('<strong class="portfolio-funds">Purchasing Power: $</strong>' + parseInt(data.local.portfolio.funds).toFixed(2) + '<br>');
+        $('.portfolio-funds').html('<strong class="portfolio-funds">Purchasing Power: $</strong>' + round(data.local.portfolio.funds, 2) + '<br>');
         $('.portfolio-stocks').replaceWith('<strong class="portfolio-stocks">Portfolio Stocks: </strong><br>');
 
         for (let key in data.local.portfolio.stocks) {
@@ -187,9 +190,12 @@ $(document).ready(() => {
         }).done((data) => {
             stockAskPrice = data.results[0].ask_price;
             portfolioWorth += (stockAskPrice * user.local.portfolio.stocks[key]);
+
             console.log("key " + key + ", stocks " + user.local.portfolio.stocks[key]);
-            appreciation = (portfolioWorth + user.local.portfolio.funds - 10000.00).toFixed(2);
-            $('.portfolio-worth').html('<strong class="portfolio-worth">Portfolio Value: $</strong>' + parseInt(portfolioWorth + user.local.portfolio.funds).toFixed(2) + ' (' + appreciation + ')' + '<br>');
+
+            appreciation = round((portfolioWorth + user.local.portfolio.funds - 10000), 2);
+
+            $('.portfolio-worth').html('<strong class="portfolio-worth">Portfolio Value: $</strong>' + round(portfolioWorth + user.local.portfolio.funds, 2) + ' (' + appreciation + ')' + '<br>');
           });
       }
     }
