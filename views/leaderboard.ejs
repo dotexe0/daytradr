@@ -51,9 +51,7 @@
       <div class="well 1">
         <h3 class="text-center"><span class="fa fa-user"></span> User</h3>
           <p>
-            <strong>Username</strong>: <%= user.local.email %><br>
-            <!-- <strong>password</strong>: <%= user.local.password %><br> -->
-            <strong>Portfolio Funds</strong class="portfolio-funds">: $<%= user.local.portfolio.funds %>
+
           </p>
       </div>
     </div>
@@ -63,7 +61,7 @@
 
   <!-- create user variable and pass it to js file -->
   <script type="text/javascript">
-    window.user= <%- JSON.stringify(users) %>
+
   </script>
 </body>
 </html>

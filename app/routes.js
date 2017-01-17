@@ -1,18 +1,21 @@
 module.exports = function(app, passport) {
 var User = require('./models/user');
+var path = require('path');
+
   // ======================================
   // HOME PAGE with login links (api endpoint)
   // ======================================
   app.get('/', function(req, res) {
-    res.status(200).sendFile('index.html') //load index file.
+    res.sendFile('index.html') //load index file.
   });
 
   // ======================================
   // LEADERBOARD
   // ======================================
   app.get('/leaderboard', function(req, res) {
-    res.status(200).sendFile('leaderboard.html', {root :'/views/'}); //load leaderboard file
+    res.render('leaderboard.ejs');
   });
+  
   // ======================================
   // LOGIN (api endpoint)
   // ======================================

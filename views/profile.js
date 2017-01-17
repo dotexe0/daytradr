@@ -166,7 +166,7 @@ function round(value, decimals) {
 
         for (let key in data.local.portfolio.stocks) {
             if (data.local.portfolio.stocks.hasOwnProperty(key) && key !== "") {
-               $('.portfolio-stocks').append('<li class="list-group-item list-group-item-success">' + key + " : " + data.local.portfolio.stocks[key] + ' shares</li><br>');
+               $('.portfolio-stocks').append('<li class="list-group-item list-group-item-success">' + key + " : " + data.local.portfolio.stocks[key] + ' shares</li>');
             }
         }
         updatePortfolioWorth(data);
@@ -193,9 +193,9 @@ function round(value, decimals) {
 
             console.log("key " + key + ", stocks " + user.local.portfolio.stocks[key]);
 
-            appreciation = round((portfolioWorth + user.local.portfolio.funds - 10000), 2);
+            appreciation = round((portfolioWorth + user.local.portfolio.funds - 10000), 2).toFixed(2);
 
-            $('.portfolio-worth').html('<strong class="portfolio-worth">Portfolio Value: $</strong>' + round(portfolioWorth + user.local.portfolio.funds, 2) + ' (' + appreciation + ')' + '<br>');
+            $('.portfolio-worth').html('<strong class="portfolio-worth">Portfolio Value: $</strong>' + round(portfolioWorth + user.local.portfolio.funds, 2).toFixed(2) + ' (' + appreciation + ')' + '<br>');
           });
       }
     }

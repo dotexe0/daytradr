@@ -39,3 +39,4 @@ require('./app/routes.js')(app, passport); //load routes and pass into app with 
 //launch server
 app.listen(port);
 console.log('Server running on' , port);
+exports.app = app;
