@@ -12,14 +12,46 @@
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <!-- load fontawesome -->
   <script src="https://use.fontawesome.com/fa1817fa3f.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
   <script type="text/javascript" src="profile.js"></script>
 
 <body>
   <div class="container">
+
+    <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/profile">daytradr</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav"></ul>
+        <form class="navbar-form navbar-left">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search">
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/leaderboard">Leaderboard</a></li>
+          <li><a href="/logout">Logout</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
     <div class="page-header text-center">
       <!-- <a href="/"><img src="../assets/logo-name.png" alt="logo" class="logo"></a> -->
         <h1><span class="fa fa-line-chart"></span> Profile Dashboard</h1>
-        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+        <!-- <a href="/logout" class="btn btn-default btn-sm">Logout</a> -->
     </div>
 
     <!-- SEARCH BAR -->
@@ -62,6 +94,7 @@
           <strong>id</strong>: <%= user._id %><br>
           <strong>Username</strong>: <%= user.local.email %><br>
           <!-- <strong>password</strong>: <%= user.local.password %><br> -->
+          <strong class="portfolio-worth">Portfolio Value: </strong><br>
           <strong class="portfolio-funds">Portfolio Purchasing Power: $</strong><br>
           <strong class="portfolio-stocks">Portfolio Stocks: </strong><br>
         </p>
