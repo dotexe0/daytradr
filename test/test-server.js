@@ -37,7 +37,7 @@ describe('Server', function() {
           .end(function(err, res) {
             should.equal(err, null);
             res.should.have.status(200);
-            res.should.be.json;
+            res.should.be.html;
             done();
           });
     });
