@@ -216,7 +216,6 @@ function round(value, decimals) {
         user.local.portfolio.worth = user.local.portfolio.funds;
         appreciation = round((user.local.portfolio.worth - 10000.00), 2).toFixed(2);
         $('.portfolio-worth').html('<strong class="portfolio-worth">Portfolio Value: $</strong>' + round(user.local.portfolio.worth, 2).toFixed(2) + ' (' + round(appreciation, 2).toFixed(2) + ')' + '<br>');
-
       }
     }
     // Reset users worth back to zero to recalculate with updated bid prices.

@@ -70,11 +70,3 @@ footer {
   -webkit-animation-delay: 0.6s;
   opacity: 0.9;
 }
-
-.animated.bounceInUp.well.third {
-  background: #333;
-  max-width: 30%;
-  color: #008542;
-  -webkit-animation-delay: 0.9s;
-  opacity: 0.9;
-}
