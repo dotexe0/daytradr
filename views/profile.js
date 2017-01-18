@@ -11,7 +11,6 @@ function round(value, decimals) {
   let query = $('#search-value').val().toUpperCase();
   updateUser(window.user);
   updatePortfolioWorth(window.user);
-  // updateUser(window.user);
 
   //Search for stock ticker on enter
   $('.form-control').keypress((e) => {
