@@ -31,7 +31,7 @@ a, a:hover {
 }
 
 .success {
-  /**/green
+  /*green*/
   color: #008542;
   text-align: center;
 }
@@ -49,5 +49,19 @@ h3.text-center {
 }
 
 li.list-group-item {
-  color: black;
+    display: list-item;
+    color: black;
+}
+
+/*Search icon*/
+.glyphicon {
+  color: grey;
+}
+/*leaderboard.ejs*/
+.username, .number{
+  display: inline;
+}
+
+ol {
+  padding-left: 10px;
 }

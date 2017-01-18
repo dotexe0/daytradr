@@ -10,8 +10,10 @@
   "author": "daniel varela",
   "license": "ISC",
   "dependencies": {
+    "animate.css": "^3.5.2",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
+    "bootstrap": "^3.3.7",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
     "ejs": "^2.5.5",
