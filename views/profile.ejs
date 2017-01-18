@@ -28,6 +28,8 @@
           <span class="icon-bar"><li><a href="/logout">Logout</a></li></span>
         </button>
         <a class="navbar-brand" href="/profile">daytradr</a>
+        <a class="navbar-brand github" href="https://github.com/dotexe0/daytradr" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -41,21 +43,19 @@
   </nav>
 
     <div class="page-header text-center">
-      <!-- <a href="/"><img src="../assets/logo-name.png" alt="logo" class="logo"></a> -->
-        <h1><span class="fa fa-line-chart"></span> Profile Dashboard</h1>
-        <!-- <a href="/logout" class="btn btn-default btn-sm">Logout</a> -->
+      <h1><span class="fa fa-line-chart"></span> Profile Dashboard</h1>
     </div>
 
     <!-- SEARCH BAR -->
     <div class="row search-query">
       <div class="col-sm-6 col-sm-offset-3">
-        <div class="input-group">
-          <input type="text" class="form-control" id="search-value" placeholder="EX. NFLX">
-          <span class="input-group-btn">
-            <button class="btn btn-default" id="search" type="button"><span class="glyphicon glyphicon-search"></span></button>
-          </div>
-        </div><!-- /input-group -->
-      </div><!-- /.col-lg-6 -->
+        <div class="form-group has-feedback">
+          <label class="control-label" for="inputSuccess2">Search using a stock ticker...</label>
+          <input type="text" class="form-control" id="search-value" placeholder="Ex. 'NFLX' will return Netflix stock price.">
+          <span class="glyphicon glyphicon-search form-control-feedback btn" id="search" type="button"></span>
+        </div>
+      </div><!-- /input-group -->
+    </div><!-- /.col-lg-6 -->
 
     <!-- STOCK DATA -->
       <div class="row">
@@ -83,9 +83,7 @@
         <div class="well 1">
           <h3 class="text-center"><span class="fa fa-user"></span> User</h3>
             <p>
-              <strong>id</strong>: <%= user._id %><br>
               <strong>Username</strong>: <%= user.local.email %><br>
-              <!-- <strong>password</strong>: <%= user.local.password %><br> -->
               <strong class="portfolio-worth">Portfolio Value: </strong><br>
               <strong class="portfolio-funds">Portfolio Purchasing Power: $</strong><br>
               <strong class="portfolio-stocks">Portfolio Stocks: </strong><br>
