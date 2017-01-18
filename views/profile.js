@@ -187,7 +187,8 @@ function round(value, decimals) {
       if (user.local.portfolio.stocks.hasOwnProperty(key) && key !== "") {
         const robinhoodURL = 'https://api.robinhood.com/quotes/?symbols='
         $.getJSON(robinhoodURL + key , (data) => {
-        }).done((data) => {
+        })
+        .done((data) => {
             stockAskPrice = data.results[0].ask_price;
             portfolioWorth += (stockAskPrice * user.local.portfolio.stocks[key]);
 
@@ -196,7 +197,13 @@ function round(value, decimals) {
             appreciation = round((portfolioWorth + user.local.portfolio.funds - 10000), 2).toFixed(2);
 
             $('.portfolio-worth').html('<strong class="portfolio-worth">Portfolio Value: $</strong>' + round(portfolioWorth + user.local.portfolio.funds, 2).toFixed(2) + ' (' + appreciation + ')' + '<br>');
-          });
+        })
+        .error(() => {
+          $('.well.2').prepend('<span><h5 class="error text-centered"> Ticker does not exist.</h5></span>');
+          setTimeout(function() {
+            $('.error').remove();
+          }, 2000);
+        });
       }
     }
   };
