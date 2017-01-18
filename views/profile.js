@@ -64,6 +64,12 @@ function round(value, decimals) {
         // console.log(stockBidPrice);
         stockAskPrice = data.results[0].ask_price;
         stockSymbol = data.results[0].symbol;
+      })
+      .error(() => {
+        $('.portfolio-data').prepend('<div class="alert alert-danger">' + '<strong>Error!</strong> That stock ticker does not exist!' + '</div>');
+        setTimeout( () => {
+          $('.alert').remove();
+        }, 2000)
       });
     };
 
@@ -71,37 +77,38 @@ function round(value, decimals) {
   //  BUY STOCKS
   // =================================
   let buyStock = (funds, stockSymbol, bidPrice, units) => {
-    // console.log("buy stocks ", units);
+    // error handling with no input or 0 value.
     if (units == NaN || units == null || units == 0 ) {
-        $('.well.2').prepend('<h5 class="error text-centered"> Enter a number greater than 0!</h5>');
+        $('.well.2').prepend('<div class="alert alert-danger"> Enter a number greater than 0!</div>');
         setTimeout(function() {
-          $('.error').remove();
+          $('.alert').remove();
         }, 2000);
+        // error handling when user does not have enough funds.
       } else if (bidPrice * units > funds) {
-          $('.well.2').prepend('<h5 class="error text-centered"> Insufficient funds!</h5>');
+          $('.well.2').prepend('<div class="alert alert-danger"> Insufficient funds!</div>');
           setTimeout(function() {
-            $('.error').remove();
+            $('.alert').remove();
           }, 2000);
+       // Successful buy order on stock that user already owns.
       } else if (window.user.local.portfolio.stocks[stockSymbol]) {
           window.user.local.portfolio.funds -= round(bidPrice * units, 2);
           window.user.local.portfolio.stocks[stockSymbol] += parseInt(units);
-          $('.well.2').prepend('<span><h4 class="success text-centered"> Order filled.</h4></span>');
+          $('.well.2').prepend('<div class="alert alert-success"> Order filled.</div>');
           setTimeout(function() {
-            $('.success').remove();
+            $('.alert').remove();
           }, 2000);
           $('#shares').val(0);
           updatePortfolioWorth(window.user);
-          // updateUser(window.user);
+          // Successful buy order on stock that user does not own.
     } else {
           window.user.local.portfolio.funds -= round(bidPrice * units, 2);
           window.user.local.portfolio.stocks[stockSymbol] = parseInt(units);
-          $('.well.2').prepend('<span><h5 class="success text-centered"> Order filled.</h5></span>');
+          $('.well.2').prepend('<div class="alert alert-success"> Order filled.</div>');
           setTimeout(function() {
-            $('.success').remove();
+            $('.alert').remove();
           }, 2000);
           $('#shares').val(0);
           updatePortfolioWorth(window.user);
-          // updateUser(window.user);
     }
   };
 
@@ -109,48 +116,48 @@ function round(value, decimals) {
   //  SELL STOCKS
   // =================================
   let sellStock = (funds, stockSymbol, askPrice, units) => {
-
+    // error handling when trying to sell 0 shares.
     if (units == 0) {
-      $('.well.2').prepend('<span><h5 class="error text-centered"> You cannot sell 0 shares!</h5></span>');
+      $('.well.2').prepend('<div class="alert alert-danger"> You cannot sell 0 shares!</div>');
       console.log("don't own this stock, ", window.user);
       setTimeout(function() {
-        $('.error').remove();
+        $('.alert').remove();
       }, 2000);
-
+    // Successful order placed when user wants to sell entire holdings of stock.
     } else if (units == window.user.local.portfolio.stocks[stockSymbol]){
         window.user.local.portfolio.funds += round(askPrice * units, 2);
         delete window.user.local.portfolio.stocks[stockSymbol];
         updatePortfolioWorth(window.user);
         // updateUser(window.user);
         console.log("del ", window.user.local);
-        $('.well.2').prepend('<span><h5 class="success text-centered"> Order filled.</h5></span>');
+        $('.well.2').prepend('<div class="alert alert-success"> Order filled.</div>');
         setTimeout(function() {
-          $('.success').remove();
+          $('.alert').remove();
         }, 2000);
-
+    // Successful order to sell stock.
     } else if (window.user.local.portfolio.stocks[stockSymbol] > 0 && window.user.local.portfolio.stocks[stockSymbol] > parseInt(units)) {
         window.user.local.portfolio.funds += round(askPrice * units, 2);
         window.user.local.portfolio.stocks[stockSymbol] -= parseInt(units);
         $('#shares').val(0);
-        $('.well.2').prepend('<span><h5 class="success text-centered"> Order filled.</h5></span>');
+        $('.well.2').prepend('<div class="alert alert-success"> Order filled.</div>');
         setTimeout(function() {
-          $('.success').remove();
+          $('.alert').remove();
         }, 2000);
         updatePortfolioWorth(window.user);
         // updateUser(window.user);
 
-    // user doesn't hold stock in portfolio
+    // error handling when user doesn't hold stock in portfolio.
     } else if (!window.user.local.portfolio.stocks[stockSymbol]) {
-        $('.well.2').prepend('<span><h5 class="error text-centered"> You cannot sell shares of stock you do not own.</h5></span>');
+        $('.well.2').prepend('<div class="alert alert-danger"> You cannot sell shares of stock you do not own.</div>');
         setTimeout(function() {
-          $('.error').remove();
+          $('.alert').remove();
         }, 2000);
-        // user doesn't have enough shares
+        // error handling when user doesn't have enough shares.
     } else if (window.user.local.portfolio.stocks[stockSymbol] < parseInt(units)) {
       console.log("Not enough shares, ", window.user);
-        $('.well.2').prepend('<span><h5 class="error text-centered"> Not enough shares.</h5></span>');
+        $('.well.2').prepend('<div class="alert alert-danger"> Not enough shares.</div>');
         setTimeout(function() {
-          $('.error').remove();
+          $('.alert').remove();
         }, 2000);
     }
   };
@@ -174,7 +181,6 @@ function round(value, decimals) {
                $('.portfolio-stocks').append('<li class="list-group-item list-group-item-success">' + key + " : " + data.local.portfolio.stocks[key] + ' shares</li>');
             }
         }
-        // updatePortfolioWorth(data);
       },
       fail: (xhr, status, error) => {
         alert(error);
@@ -188,7 +194,6 @@ function round(value, decimals) {
   function updatePortfolioWorth(user) {
     let appreciation;
     for (let key in user.local.portfolio.stocks) {
-      // console.log("new user?", Object.keys(user.local.portfolio.stocks).length);
       if (user.local.portfolio.stocks.hasOwnProperty(key) && key !== "") {
         const robinhoodURL = 'https://api.robinhood.com/quotes/?symbols='
         $.getJSON(robinhoodURL + key , (data) => {
@@ -198,13 +203,12 @@ function round(value, decimals) {
             user.local.portfolio.worth += (stockAskPrice * user.local.portfolio.stocks[key]);
             appreciation = round((user.local.portfolio.worth + user.local.portfolio.funds - 10000.00), 2).toFixed(2);
             $('.portfolio-worth').html('<strong class="portfolio-worth">Portfolio Value: $</strong>' + round(user.local.portfolio.worth + user.local.portfolio.funds, 2).toFixed(2) + ' (' + round(appreciation, 2).toFixed(2) + ')' + '<br>');
-            // console.log("initialWorth1", user.local.portfolio.worth);
             updateUser(user);
         })
         .error(() => {
-          $('.well.2').prepend('<span><h5 class="error text-centered"> Ticker does not exist.</h5></span>');
+          $('.well.2').prepend('<h5 class="alert alert-danger"> Ticker does not exist.</h5>');
           setTimeout(function() {
-            $('.error').remove();
+            $('.alert').remove();
           }, 2000);
         });
         // If user has no stocks, set worth to funds.
@@ -212,15 +216,12 @@ function round(value, decimals) {
         user.local.portfolio.worth = user.local.portfolio.funds;
         appreciation = round((user.local.portfolio.worth - 10000.00), 2).toFixed(2);
         $('.portfolio-worth').html('<strong class="portfolio-worth">Portfolio Value: $</strong>' + round(user.local.portfolio.worth, 2).toFixed(2) + ' (' + round(appreciation, 2).toFixed(2) + ')' + '<br>');
-        // console.log("initialWorth2", user.local.portfolio.worth);
 
       }
     }
+    // Reset users worth back to zero to recalculate with updated bid prices.
     user.local.portfolio.worth = 0;
-    // setTimeout(updateUser(user), 1000);
-      //
-      // console.log("user , ", user);
-      // console.log(user.local.portfolio.worth);
+
   };
 
 });
