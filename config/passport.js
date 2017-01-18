@@ -49,6 +49,7 @@ module.exports = function(passport) {
           newUser.local.email = email;
           newUser.local.password = newUser.generateHash(password);
           newUser.local.portfolio = {
+            worth : 0,
             funds : 10000,
             stocks: {
               [""] : null
