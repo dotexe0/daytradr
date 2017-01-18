@@ -9,7 +9,7 @@ function round(value, decimals) {
   let stockBidPrice, stockAskPrice, stockSymbol;
   let units = parseInt($('#shares').val());
   let query = $('#search-value').val().toUpperCase();
-  console.log("INTRO", window.user);
+  updateUser(window.user);
   updatePortfolioWorth(window.user);
   // updateUser(window.user);
 
@@ -61,7 +61,7 @@ function round(value, decimals) {
       $.getJSON(robinhoodURL + query , (data) => {
         $('.stock-data').text(query + ': $' + round(data.results[0].bid_price, 2).toFixed(2));
         stockBidPrice = data.results[0].bid_price;
-        console.log(stockBidPrice);
+        // console.log(stockBidPrice);
         stockAskPrice = data.results[0].ask_price;
         stockSymbol = data.results[0].symbol;
       });
@@ -71,7 +71,7 @@ function round(value, decimals) {
   //  BUY STOCKS
   // =================================
   let buyStock = (funds, stockSymbol, bidPrice, units) => {
-    console.log("buy stocks ", units);
+    // console.log("buy stocks ", units);
     if (units == NaN || units == null || units == 0 ) {
         $('.well.2').prepend('<h5 class="error text-centered"> Enter a number greater than 0!</h5>');
         setTimeout(function() {
@@ -95,7 +95,7 @@ function round(value, decimals) {
     } else {
           window.user.local.portfolio.funds -= round(bidPrice * units, 2);
           window.user.local.portfolio.stocks[stockSymbol] = parseInt(units);
-          $('.well.2').prepend('<span><h4 class="success text-centered"> Order filled.</h4></span>');
+          $('.well.2').prepend('<span><h5 class="success text-centered"> Order filled.</h5></span>');
           setTimeout(function() {
             $('.success').remove();
           }, 2000);
@@ -188,6 +188,7 @@ function round(value, decimals) {
   function updatePortfolioWorth(user) {
     let appreciation;
     for (let key in user.local.portfolio.stocks) {
+      // console.log("new user?", Object.keys(user.local.portfolio.stocks).length);
       if (user.local.portfolio.stocks.hasOwnProperty(key) && key !== "") {
         const robinhoodURL = 'https://api.robinhood.com/quotes/?symbols='
         $.getJSON(robinhoodURL + key , (data) => {
@@ -195,10 +196,9 @@ function round(value, decimals) {
         .done((data) => {
             stockAskPrice = data.results[0].bid_price;
             user.local.portfolio.worth += (stockAskPrice * user.local.portfolio.stocks[key]);
-
             appreciation = round((user.local.portfolio.worth + user.local.portfolio.funds - 10000.00), 2).toFixed(2);
             $('.portfolio-worth').html('<strong class="portfolio-worth">Portfolio Value: $</strong>' + round(user.local.portfolio.worth + user.local.portfolio.funds, 2).toFixed(2) + ' (' + round(appreciation, 2).toFixed(2) + ')' + '<br>');
-            console.log(user.local.portfolio.worth);
+            // console.log("initialWorth1", user.local.portfolio.worth);
             updateUser(user);
         })
         .error(() => {
@@ -207,6 +207,13 @@ function round(value, decimals) {
             $('.error').remove();
           }, 2000);
         });
+        // If user has no stocks, set worth to funds.
+      } else if (Object.keys(user.local.portfolio.stocks).length == 1){
+        user.local.portfolio.worth = user.local.portfolio.funds;
+        appreciation = round((user.local.portfolio.worth - 10000.00), 2).toFixed(2);
+        $('.portfolio-worth').html('<strong class="portfolio-worth">Portfolio Value: $</strong>' + round(user.local.portfolio.worth, 2).toFixed(2) + ' (' + round(appreciation, 2).toFixed(2) + ')' + '<br>');
+        // console.log("initialWorth2", user.local.portfolio.worth);
+
       }
     }
     user.local.portfolio.worth = 0;

@@ -4,21 +4,37 @@
     <meta charset="utf-8">
     <title>daytradr</title>
     <link rel="shortcut icon" sizes="16x16 24x24 32x32 48x48 64x64" href="./assets/favicon.ico">
-    <link rel="stylesheet" href="./css/master.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
     <!-- load bootstrap -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<script src="/js/jquery.min.js"></script>
     <!-- load fontawesome -->
     <script src="https://use.fontawesome.com/fa1817fa3f.js"></script>
   </head>
-
   <body>
-    <div class="container">
       <div class="jumbotron text-center">
-          <h1><a href="/">daytradr</a> </h1>
-          <p>Login or Register</p>
+          <h1><a class="daytradr" href="/">daytradr</a> </h1>
+          <p class="login-register">Login or Register</p>
           <a href="/login" class="btn btn-default"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
           <a href="/signup" class="btn btn-default"><i class="fa fa-user-plus" aria-hidden="true"></i> Sign Up</a>
       </div>
+    <div class="animated bounceInUp well first">
+      <h4 class="content-title">Play the stock market using fake money!</h4>
     </div>
+    <div class="animated bounceInUp well second">
+      <h4 class="content-title">Place Buy/Sell orders at your leisure.</h4>
+    </div>
+    <div class="animated bounceInUp well third">
+      <h4 class="content-title">Watch your stock portfolio grow...or plummet without losing a dime.</h4>
+    </div>
+    <footer class="footer">
+      <p class="text-muted">
+        Made with <i class="fa fa-heart" aria-hidden="true"></i> by Daniel Varela <br>
+        See github: <a href="https://github.com/dotexe0/daytradr" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+      </p>
+    </footer>
+
   </body>
 </html>
