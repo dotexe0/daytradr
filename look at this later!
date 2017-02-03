@@ -1,0 +1,68 @@
+$(document).ready(() => {
+
+  const robinhoodURL = 'https://api.robinhood.com/quotes/?symbols='
+  let users = window.users;
+  //Handle all floating number issues.
+  function round(value, decimals) {
+    return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+  }
+  // EXTRACT USER WORTH AND MAKE AN ARRAY OF OBJECTS WITH KEY "USER" VALUE "WORTH", THEN SORT.
+  var sort_by = function(field, reverse, primer) {
+
+     var key = primer ?
+         function(x) {return primer(x[field])} :
+         function(x) {return x[field]};
+
+     reverse = !reverse ? 1 : -1;
+
+     return function (a, b) {
+         return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+       }
+  }
+
+
+
+console.log("initial db of users", users);
+
+function getUpdatedPrices(user){
+  // update user worth based on current market value
+    for (let key in user.local.portfolio.stocks) {
+      if (user.local.portfolio.stocks.hasOwnProperty(key) && key !== "") {
+        $.getJSON(robinhoodURL + key , (data) => {
+          stockBidPrice = data.results[0].bid_price;
+          user.local.portfolio.worth += (stockBidPrice * user.local.portfolio.stocks[key]);
+        });
+      }
+      console.log("inside", user.local.portfolio.worth);
+    }
+    // console.log(user.local.portfolio.worth);
+    return user;
+}
+
+let updatedUsers = [];
+function calculateCurrentNetWorth(users) {
+  for (let i = 0; i < users.length; i++) {
+    users[2].local.portfolio.worth = users[2].local.portfolio.funds;
+    updatedUsers.push(getUpdatedPrices(users[2]));
+  }
+};
+
+function showResults(updatedUsers) {
+  let ranking = new Array();
+  for (let i = 0; i < updatedUsers.length; i++) {
+    ranking.push({'username' : updatedUsers[i].local.email, 'worth' : round((updatedUsers[i].local.portfolio.worth), 2).toFixed(2)});
+  }
+
+  ranking.sort(sort_by('worth', true, parseInt));
+
+  for (let i = 0; i < ranking.length; i++) {
+    $('.rank').append('<li class="list-group-item list-group-item-action list-group-item-success">' + '<h6 class="username">' + ranking[i].username + ': <h6 class="number">$' + ranking[i].worth + '</h6></li>');
+  }
+};
+
+  $.when(calculateCurrentNetWorth(users)).then(showResults(updatedUsers));
+
+
+
+
+});
