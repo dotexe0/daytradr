@@ -35,15 +35,14 @@ function getUpdatedPrices(user){
       }
       console.log("inside", user.local.portfolio.worth);
     }
-    // console.log(user.local.portfolio.worth);
     return user;
 }
 
 let updatedUsers = [];
 function calculateCurrentNetWorth(users) {
   for (let i = 0; i < users.length; i++) {
-    users[2].local.portfolio.worth = users[2].local.portfolio.funds;
-    updatedUsers.push(getUpdatedPrices(users[2]));
+    users[i].local.portfolio.worth = users[i].local.portfolio.funds;
+    updatedUsers.push(getUpdatedPrices(users[i]));
   }
 };
 
