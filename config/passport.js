@@ -1,5 +1,6 @@
 //load required modules
 var LocalStrategy = require('passport-local').Strategy;
+var AnonymousStrategy = require('passport-anonymous').Strategy;
 
 //load user model
 var User = require('../app/models/user');
@@ -96,4 +97,23 @@ module.exports = function(passport) {
   });
   }));
 
+ // ======================
+  // GUEST LOGIN
+  // ======================
+
+// passport.use('guest-login', new LocalStrategy({
+//     passReqToCallback: true
+// },
+// function (req, NOusername, NOpassword, done) {
+//   ////NO PASSWORD OR USERNAME checks here, just deciding what kind of temporary user needs to be created///
+//   if (req.session.passport) {
+//     ///create new user with previous session data
+//     done(null,user)
+//   } else {
+//     ///create clean user
+//     done(null, user)
+//   }
+// }
+// ));
 };
+

@@ -35,6 +35,7 @@
   "license": "ISC",
   "dependencies": {
     "animate.css": "^3.5.2",
+    "axios": "^0.16.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
     "bootstrap": "^3.3.7",
@@ -48,6 +49,7 @@
     "mongoose": "^4.7.6",
     "morgan": "^1.7.0",
     "passport": "^0.3.2",
+    "passport-anonymous": "^1.0.1",
     "passport-local": "^1.0.0"
   },
   "devDependencies": {

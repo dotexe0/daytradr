@@ -29,11 +29,18 @@ var path = require('path');
   });
 
   //process login form
-  app.post('/login', passport.authenticate('local-login', {
-    successRedirect: '/profile',
-    failureRedirect: '/login',
-    failureFlash: true
-  }));
+ app.post('/login',
+  passport.authenticate('local-login'),
+  function(req, res) {
+    console.log('req: ', req.body)
+    // If this function gets called, authentication was successful.
+    // `req.user` contains the authenticated user.
+    res.redirect('/profile');
+  });
+
+app.get('/guestLogin', function (req, res) {        
+    res.render('guestLogin.ejs', { message: req.flash('loginMessage')});
+});
 
   // ======================================
   // SIGNUP
