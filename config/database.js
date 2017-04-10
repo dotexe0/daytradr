@@ -1,4 +1,5 @@
 module.exports = {
+
    'url' : 'mongodb://admin:password@ds151068.mlab.com:51068/daytradr'
 
   // 'url' : 'mongodb://localhost/daytradr'

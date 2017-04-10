@@ -60,7 +60,6 @@ function round(value, decimals) {
       $.getJSON(robinhoodURL + query , (data) => {
         $('.stock-data').text(query + ': $' + round(data.results[0].bid_price, 2).toFixed(2));
         stockBidPrice = data.results[0].bid_price;
-        // console.log(stockBidPrice);
         stockAskPrice = data.results[0].ask_price;
         stockSymbol = data.results[0].symbol;
       })
