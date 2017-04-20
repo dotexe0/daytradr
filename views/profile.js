@@ -172,7 +172,7 @@ function round(value, decimals) {
       contentType: 'application/json',
       success: (data) => {
         $('.portfolio-funds').html('<strong class="portfolio-funds">Purchasing Power: $</strong>' + round(data.local.portfolio.funds, 2).toFixed(2) + '<br>');
-        $('.portfolio-stocks').replaceWith('<strong class="portfolio-stocks">Portfolio Stocks: </strong><br>');
+        $('.portfolio-stocks').replaceWith('<strong class="portfolio-stocks">Portfolio Stocks: </strong>');
 
         for (let key in data.local.portfolio.stocks) {
             if (data.local.portfolio.stocks.hasOwnProperty(key) && key !== "") {

@@ -1,57 +1,81 @@
 <!-- views/profile.ejs -->
 <!doctype html>
 <html>
-<head>
   <meta charset="utf-8">
-  <title>daytradr Profile</title>
-  <link rel="shortcut icon" sizes="16x16 24x24 32x32 48x48 64x64" href="./assets/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="stock trading app">
+    <meta name="author" content="Daniel Varela">
 
-  <link rel="stylesheet" href="./css/master.css">
-  <script src="//code.jquery.com/jquery-2.1.0.js"></script>
-  <!-- load bootstrap -->
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <!-- load fontawesome -->
-  <script src="https://use.fontawesome.com/fa1817fa3f.js"></script>
-  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-  <script type="text/javascript" src="profile.js"></script>
+    <title>Proflie</title>
 
-<body>
-  <div class="container">
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/profile">daytradr</a>
-        <a class="navbar-brand github" href="https://github.com/dotexe0/daytradr" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
-      </div>
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="/leaderboard">Leaderboard</a></li>
-          <li><a href="/logout">Logout</a></li>
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-  </nav>
+    <!-- Theme CSS -->
+    <link href="css/grayscale.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">
+                    <i class="fa fa-gg-circle fa-inverse"></i> <span class="light">day</span> tradr
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <!--<li>
+                        <a class="page-scroll" href="/">Home</a>
+                    </li>-->
+                    <li>
+                        <a class="page-scroll" href="/leaderboard">Leaderboard</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
 
     <div class="page-header text-center">
-      <h1><span class="fa fa-line-chart"></span> Profile Dashboard</h1>
+      <h1 class="profile-title"><span class="fa fa-line-chart"></span> Profile Dashboard</h1>
     </div>
 
     <!-- SEARCH BAR -->
     <div class="row search-query">
-      <div class="col-sm-6 col-sm-offset-3">
-        <div class="form-group has-feedback">
-          <label class="control-label" for="inputSuccess2">Search using a stock ticker...</label>
-          <input type="text" class="form-control" id="search-value" placeholder="Ex. 'NFLX' will return Netflix stock price.">
-          <span class="glyphicon glyphicon-search form-control-feedback btn" id="search" type="button"></span>
+      <div class="col-lg-6 col-sm-6 col-sm-offset-3">
+      <div class="input-group">
+        <input type="text" class="form-control" id="search-value" placeholder="Ex. 'NFLX' will return Netflix stock price.">
+            <span class="input-group-btn">
+              <button class="btn btn-default" id="search" type="button">Search</button>
+            </span>
         </div>
       </div><!-- /input-group -->
     </div><!-- /.col-lg-6 -->
@@ -80,9 +104,8 @@
     <div class="row">
       <div class="col-sm-6 col-sm-offset-3">
         <div class="well 1">
-          <h3 class="text-center"><span class="fa fa-user"></span> User</h3>
+          <h3 class="text-center"><span class="fa fa-user"></span> <%= user.local.email %></h3>
             <p>
-              <strong>Username</strong>: <%= user.local.email %><br>
               <strong class="portfolio-worth">Portfolio Value: </strong><br>
               <strong class="portfolio-funds">Portfolio Purchasing Power: $</strong><br>
               <strong class="portfolio-stocks">Portfolio Stocks: </strong><br>
@@ -91,11 +114,22 @@
       </div>
     </div>
 
-  </div>
-
   <!-- create user variable and pass it to js file -->
   <script type="text/javascript">
     window.user= <%- JSON.stringify(user) %>
   </script>
+      <!-- jQuery -->
+    <script src="vendor/jquery/jquery.js"></script>
+    <script src="profile.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+
+    <!-- Theme JavaScript -->
+    <script src="js/grayscale.js"></script>
+
 </body>
 </html>

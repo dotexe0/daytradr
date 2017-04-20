@@ -13,6 +13,14 @@ body {
   padding: 0;
 }
 
+.page-header {
+/*display: -webkit-webkit-inline-box;
+display: -moz-webkit-inline-box;
+display: -ms-webkit-inline-box;
+display: -o-webkit-inline-box;
+display: webkit-inline-box;*/
+}
+
 .search-query {
   margin-bottom: 20px;
 }
@@ -51,6 +59,7 @@ h3.text-center {
 li.list-group-item {
     display: list-item;
     color: black;
+    list-style: none;
 }
 
 /*Search icon*/
