@@ -356,3 +356,8 @@ ol, ul {
   width: 70px;
   color: black;
 }
+
+.list-group-item-success {
+    background-color: black;
+    color: #42DCA3;;
+}
