@@ -29,7 +29,7 @@
     "watch:js:minified": "npm run build:js:minified && webpack --watch --minify",
     "clean:js:minified": "rm -f build/$npm_package_name.$npm_package_version.min.js build/$npm_package_name.$npm_package_version.min.js.map",
     "test": "mocha",
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "author": "daniel varela",
   "license": "ISC",
