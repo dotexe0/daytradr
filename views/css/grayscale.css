@@ -361,3 +361,7 @@ ol, ul {
     background-color: black;
     color: #42DCA3;;
 }
+
+.row {
+  margin: 0 auto !important;
+}
